@@ -23,18 +23,11 @@
         android:layout_alignParentLeft="true"
         android:paddingLeft="@dimen/activity_horizontal_margin" />
 
-        <TextView
-            android:id="@+id/class_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@+id/class_id"
-            android:paddingLeft="@dimen/activity_horizontal_margin" />
-
         <ImageButton
             android:id="@+id/assessment_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/class_id"
             android:paddingRight="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/assessment_icon"
@@ -45,7 +38,7 @@
             android:id="@+id/competency_button"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/assessment_button"
             android:paddingRight="10dp"
             android:scaleType="fitXY"
             android:src="@drawable/competency_icon"
