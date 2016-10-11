@@ -43,6 +43,9 @@ public class TutorialActivity extends AppCompatActivity {
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
+    /**
+     *
+     */
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.activity_tutorial_list);
         recyclerView.setHasFixedSize(true);
@@ -53,6 +56,9 @@ public class TutorialActivity extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     */
     private void loadClasses() {
         showProgressDialog();
         //do all my work here
