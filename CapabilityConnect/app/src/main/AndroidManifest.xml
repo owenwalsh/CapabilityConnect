@@ -2,19 +2,26 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="au.com.owenwalsh.capabilityconnect">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".View.MainActivity">
+
+
+        <activity
+        android:name=".View.SplashActivity"
+        android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".View.MainActivity"/>
         <activity android:name=".View.TutorialActivity" />
         <activity android:name=".View.StudentActivity" />
         <activity android:name=".View.AddEditTutorial" />
@@ -23,7 +30,7 @@
         <activity android:name=".View.AddEditAssessmentActivity" />
         <activity android:name=".View.AddEditCompetencyActivity" />
         <activity android:name=".View.AttendanceActivity" />
-        <activity android:name=".View.WeeksActivity"></activity>
+        <activity android:name=".View.WeeksActivity" />
     </application>
 
 </manifest>
