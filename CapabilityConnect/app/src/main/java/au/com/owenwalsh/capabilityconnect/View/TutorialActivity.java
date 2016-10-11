@@ -56,6 +56,7 @@ public class TutorialActivity extends AppCompatActivity {
     private void loadClasses() {
         showProgressDialog();
         //do all my work here
+        hideProgressDialog();
     }
 
 
