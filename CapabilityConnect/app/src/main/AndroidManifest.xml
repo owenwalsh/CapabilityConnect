@@ -10,9 +10,6 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
-
         <activity
             android:name=".View.SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
@@ -22,9 +19,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".View.MainActivity"/>
-        <activity android:name=".View.TutorialActivity" />
-        <activity android:name=".View.StudentActivity" />
+        <activity android:name=".View.MainActivity" />
+        <activity android:name=".View.TutorialsListActivity" />
+        <activity android:name=".View.StudentsListActivity" />
         <activity android:name=".View.AddEditTutorial" />
         <activity android:name=".View.AssessmentActivity" />
         <activity android:name=".View.CompetencyActivity" />
@@ -32,6 +29,7 @@
         <activity android:name=".View.AddEditCompetencyActivity" />
         <activity android:name=".View.AttendanceActivity" />
         <activity android:name=".View.WeeksActivity" />
+        <activity android:name=".View.AddEditStudentActivity"></activity>
     </application>
 
 </manifest>

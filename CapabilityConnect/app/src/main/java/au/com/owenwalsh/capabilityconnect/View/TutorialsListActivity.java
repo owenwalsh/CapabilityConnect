@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import au.com.owenwalsh.capabilityconnect.R;
 
-public class TutorialActivity extends AppCompatActivity {
+public class TutorialsListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private ProgressDialog progress;

@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("Class Button Clicked: ", "moving to class activity");
-                Intent intent = new Intent(getApplicationContext(), TutorialActivity.class);
+                Intent intent = new Intent(getApplicationContext(), TutorialsListActivity.class);
                 startActivity(intent);
             }
         });
@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("Student Clicked: ", "Student to class activity");
-                Intent intent = new Intent (getApplicationContext(), StudentActivity.class);
+                Intent intent = new Intent (getApplicationContext(), StudentsListActivity.class);
                 startActivity(intent);
             }
         });

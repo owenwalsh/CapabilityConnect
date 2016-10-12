@@ -3,4 +3,10 @@
     <string name="class_button">Classes</string>
     <string name="student_button">Students</string>
     <string name="weeks_button">Weeks</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_add_student">ADD STUDENT</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_name">Name</string>
+    <string name="err_msg_email">Email is wrong</string>
+    <string name="err_msg_name">Name is empty</string>
 </resources>
