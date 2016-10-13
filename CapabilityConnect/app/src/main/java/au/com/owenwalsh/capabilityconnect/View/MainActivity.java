@@ -1,80 +1,103 @@
 package au.com.owenwalsh.capabilityconnect.View;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-
-import au.com.owenwalsh.capabilityconnect.Database.StudentLogic;
-import au.com.owenwalsh.capabilityconnect.Database.TutorialLogic;
-import au.com.owenwalsh.capabilityconnect.Database.TutorialWeekStudentLogic;
-import au.com.owenwalsh.capabilityconnect.Model.Student;
-import au.com.owenwalsh.capabilityconnect.Model.Tutorial;
+import android.widget.Toast;
 import au.com.owenwalsh.capabilityconnect.R;
 
 public class MainActivity extends AppCompatActivity {
-    private Button classButton;
-    private Button studentButton;
-    private Button weeksButton;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initView();
-        classButton.setOnClickListener(new View.OnClickListener() {
 
+        // Initializing Toolbar and setting it as the actionbar
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        //Initializing NavigationView
+        navigationView = (NavigationView) findViewById(R.id.navigation_view);
+
+        //Setting Navigation View Item Selected Listener to handle the item click of the navigation menu
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            // This method will trigger on item Click of navigation menu
             @Override
-            public void onClick(View view) {
-                //test database
-                /*Tutorial tutorial = new Tutorial("Friday", "10:00");
-                TutorialLogic tut = new TutorialLogic(getApplicationContext());
-                tut.addTutorial(tutorial);*/
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
 
-                Log.d("Class Button Clicked: ", "moving to class activity");
-                Intent intent = new Intent(getApplicationContext(), TutorialsListActivity.class);
-                startActivity(intent);
+
+                //Checking if the item is in checked state or not, if not make it in checked state
+                if(menuItem.isChecked()) menuItem.setChecked(false);
+                else menuItem.setChecked(true);
+
+                //Closing drawer on item click
+                drawerLayout.closeDrawers();
+
+                //Check to see which item was being clicked and perform appropriate action
+                switch (menuItem.getItemId()){
+
+
+                    //Replacing the main content with ContentFragment Which is our Inbox View;
+                    case R.id.tutorial:
+                        Toast.makeText(getApplicationContext(),"Inbox Selected",Toast.LENGTH_SHORT).show();
+
+                       StudentListFragment fragment = new StudentListFragment();
+                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        fragmentTransaction.replace(R.id.frame,fragment);
+                        fragmentTransaction.commit();
+
+                        return true;
+
+                    case R.id.students:
+                        Toast.makeText(getApplicationContext(),"Stared Selected",Toast.LENGTH_SHORT).show();
+                        return true;
+                    case R.id.weeks:
+                        Toast.makeText(getApplicationContext(),"Send Selected",Toast.LENGTH_SHORT).show();
+                        return true;
+                    default:
+                        Toast.makeText(getApplicationContext(),"Somethings Wrong",Toast.LENGTH_SHORT).show();
+                        return true;
+
+                }
             }
         });
-        studentButton.setOnClickListener(new View.OnClickListener() {
+
+        // Initializing Drawer Layout and ActionBarToggle
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer);
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.openDrawer, R.string.closeDrawer){
 
             @Override
-            public void onClick(View view) {
-
-                //test database
-
-                /*TutorialWeekStudentLogic classtLogic = new TutorialWeekStudentLogic(getApplicationContext());
-                classtLogic.addStudentToClass("z123456789", 1);*/
-
-                /*StudentLogic sLogic = new StudentLogic(getApplicationContext());
-                Student student = new Student("z123456789", "Silvia", "Mereu", "z123456@unsw.edu.au", "very Lovely", "Very Sweet");
-                sLogic.insertStudent(student);*/
-
-               /* StudentLogic sLogic = new StudentLogic(getApplicationContext());
-                sLogic.findStudentByClassId(1);*/
-
-                Log.d("Student Clicked: ", "Student to class activity");
-
-                Intent intent = new Intent (getApplicationContext(), StudentsListActivity.class);
-                startActivity(intent);
+            public void onDrawerClosed(View drawerView) {
+                // Code here will be triggered once the drawer closes as we dont want anything to happen so we leave this blank
+                super.onDrawerClosed(drawerView);
             }
-        });
-        weeksButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
-            public void onClick(View view) {
-                Log.d("Weeks Button Clicked: ", "Student to class activity");
-                Intent intent = new Intent(getApplicationContext(), WeeksActivity.class);
-                startActivity(intent);
-            }
-        });
-    }
+            public void onDrawerOpened(View drawerView) {
+                // Code here will be triggered once the drawer open as we dont want anything to happen so we leave this blank
 
-    private void initView() {
-        classButton = (Button) findViewById(R.id.classButton);
-        studentButton = (Button) findViewById(R.id.studentButton);
-        weeksButton = (Button) findViewById(R.id.weeksButton);
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+
+        //calling sync state is necessay or else your hamburger icon wont show up
+        actionBarDrawerToggle.syncState();
+
+
+
+
+
+
     }
 }
