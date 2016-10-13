@@ -1,8 +1,6 @@
 package au.com.owenwalsh.capabilityconnect.Database;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -39,14 +37,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //CLASS_WEEK_STUDENT table and columns names
     public final static String CLASS_WEEK_STUDENT = "Class_Week_Student";
     public final static String STUDENT_ID = "StudentId";
-    public final static String WEEK_NAME = "WeekName";
-    public final static String TUTORIAL_NAME = "TutorialName";
+    public final static String W_C_S_WEEK_ID = "WeekId";
+    public final static String W_C_S_TUTORIAL_ID = "TutorialId";
     public final static String ATTEND = "Attend";
 
     //Assessments table and columns names
     public final static String ASSESSMENTS = "Assessments";
     public final static String ASSESSMENT_ID = "AssessmentId";
     public final static String ASSESSMENT_NAME = "AssessmentName";
+    public final static String ASSESSMENT_MARK = "AssessmentMark";
     public final static String DUE_DAY = "DueDay";
     public final static String DUE_MONTH = "DueMonth";
     public final static String DUE_Year = "DueYear";
@@ -54,6 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Assessments_Students table and columns names
     public final static String STUDENTS_ASSESSMENTS = "Students_Assessments";
     public final static String ASSESSMENTS_STUDENT_ID = "AssessmentStudentId";
+    public final static String ASSESSMENTS_ASSESSMENTS_ID = "AssessmentAssessmentsId";
     public final static String STUDENT_MARK = "StudentMark";
     public final static String ASSESSMENT_COMMENT = "AssessmentComment";
 
@@ -66,6 +66,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //Students_Competencies table and columns names
     public final static String STUDENTS_COMPETENCIES = "Students_Competencies";
     public final static String COMPETENCY_STUDENT_ID = "CompetencyStudentId";
+    public final static String COMPETENCY_COMPETENCY_ID = "CompetencyCompetencyId";
     public final static String RATING = "Rating";
 
 
@@ -74,17 +75,63 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + STUDENTS_TABLE + " (" + ZID + " TEXT PRIMARY KEY, "
             + FIRST_NAME + " TEXT NOT NULL, "
             + LAST_NAME + " TEXT NOT NULL, "
-            + FIRST_NAME + " TEXT NOT NULL, "
             + EMAIL + " TEXT NOT NULL, "
             + WEAKNESS + " TEXT, "
             + STRENGTH + " TEXT )";
 
     //Creating the Tutorials table
     private static final String CREATE_TUTORIALS_TABLE = "CREATE TABLE "
-            + TUTORIALS + " (" + TUTORIAL_ID + " INTEGER PRIMARY KEY, "
+            + TUTORIALS + " (" + TUTORIAL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + DAY + " TEXT NOT NULL, "
-            + TIME + " REAL NOT NULL, )";
+            + TIME + " TEXT NOT NULL)";
 
+    //Creating the WEEKS  table
+    private static final String CREATE_WEEKS_TABLE = "CREATE TABLE "
+            + WEEKS + " (" + WEEK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + NAME + " TEXT NOT NULL, "
+            + TO_DO_NEXT_WEEK + " TEXT, "
+            + WEEK_COMMENT + " TEXT)";
+
+    //Creating the CLASS_WEEK_STUDENT  table
+    private static final String CREATE_CLASS_WEEK_STUDENT_TABLE = "CREATE TABLE "
+            + CLASS_WEEK_STUDENT + " (" + ATTEND + " INTEGER, "
+            + STUDENT_ID + " TEXT, "
+            + W_C_S_TUTORIAL_ID + " INTEGER, "
+            + W_C_S_WEEK_ID + " INTEGER, "
+            + "FOREIGN KEY(" + STUDENT_ID + ") REFERENCES " + STUDENTS_TABLE + "(" + ZID + "),"
+            + "FOREIGN KEY(" + W_C_S_TUTORIAL_ID + ") REFERENCES " + TUTORIALS + "(" + TUTORIAL_ID + "),"
+            + "FOREIGN KEY(" + W_C_S_WEEK_ID + ") REFERENCES " + WEEKS + "(" + WEEK_ID + "))";
+
+    //Creating the Competency table
+    private static final String CREATE_COMPETENCY_TABLE = "CREATE TABLE "
+            + COMPETENCIES + " (" + COMPETENCY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + COMPETENCY_NAME + " TEXT, "
+            + DESCRIPTION + " TEXT)";
+
+    //Creating the Competency_Students table
+    private static final String CREATE_STUDENTS_COMPETENCIES_TABLE = "CREATE TABLE "
+            + STUDENTS_COMPETENCIES + " (" + RATING + " INTEGER, "
+            + COMPETENCY_STUDENT_ID + " TEXT, "
+            + COMPETENCY_COMPETENCY_ID + " INTEGER, "
+            + "FOREIGN KEY(" + COMPETENCY_STUDENT_ID + ") REFERENCES " + STUDENTS_TABLE + "(" + ZID + "),"
+            + "FOREIGN KEY(" + COMPETENCY_COMPETENCY_ID + ") REFERENCES " + COMPETENCIES + "(" + COMPETENCY_ID + "))";
+
+    //Creating the Assessments table
+    private static final String CREATE_ASSESSMENTS_TABLE = "CREATE TABLE "
+            + ASSESSMENTS + " (" + ASSESSMENT_ID + "  INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + ASSESSMENT_NAME + " TEXT, "
+            + DUE_DAY + "INTEGER, "
+            + DUE_MONTH + "INTEGER, "
+            + DUE_Year + "INTEGER, "
+            + ASSESSMENT_MARK + "INTEGER)";
+
+    //Creating the Students_Assessments table
+    private static final String CREATE_STUDENTS_ASSESSMENTS_TABLE = "CREATE TABLE "
+            + STUDENTS_ASSESSMENTS + " (" + STUDENT_MARK + " INTEGER, "
+            + ASSESSMENTS_STUDENT_ID + " TEXT, "
+            + ASSESSMENTS_ASSESSMENTS_ID + " INTEGER, "
+            + "FOREIGN KEY(" + ASSESSMENTS_STUDENT_ID + ") REFERENCES " + STUDENTS_TABLE + "(" + ZID + "),"
+            + "FOREIGN KEY(" + ASSESSMENTS_ASSESSMENTS_ID + ") REFERENCES " + ASSESSMENTS + "(" + ASSESSMENT_ID + "))";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -95,41 +142,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database) {
         database.execSQL(CREATE_STUDENTS_TABLE);
         database.execSQL(CREATE_TUTORIALS_TABLE);
+        database.execSQL(CREATE_WEEKS_TABLE);
+        database.execSQL(CREATE_CLASS_WEEK_STUDENT_TABLE);
+        database.execSQL(CREATE_COMPETENCY_TABLE);
+        database.execSQL(CREATE_STUDENTS_COMPETENCIES_TABLE);
+        database.execSQL(CREATE_ASSESSMENTS_TABLE);
+        database.execSQL(CREATE_STUDENTS_ASSESSMENTS_TABLE);
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-        //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + POKEMON_TABLE);
-        onCreate(sqLiteDatabase);
+    public void onUpgrade(SQLiteDatabase database, int i, int i1) {
+        database.execSQL("DROP TABLE IF EXISTS " + CREATE_STUDENTS_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + CREATE_TUTORIALS_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + CREATE_WEEKS_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + CREATE_CLASS_WEEK_STUDENT_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + CREATE_COMPETENCY_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + CREATE_STUDENTS_COMPETENCIES_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + CREATE_ASSESSMENTS_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + CREATE_STUDENTS_ASSESSMENTS_TABLE);
+        onCreate(database);
     }
 
-    //inserting a pokemon to the database table
-    public boolean insterPokemon(int id, String name, byte[] sprite) {
-        boolean inserted = false;
-        /*SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(POKEMON_ID, id);
-        contentValues.put(POKEMON_NAME, name);
-        contentValues.put(POKEMON_SPRITE, sprite);
-        long result = db.insert(POKEMON_TABLE, null, contentValues);
-        if (result == -1) {
-            inserted = false;
-        } else {
-            inserted = true;
-        }*/
-        return inserted;
-    }
-
-    //reading all the pokemons from the database
-    public Cursor getAllPokemons() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        //Cursor result = db.rawQuery("select * from " + POKEMON_TABLE, null);
-        return null;
-    }
-
-    //delete all the pokemon from the database
-    public void deleteAllPokemons() {
-        SQLiteDatabase db = this.getWritableDatabase();
-        //db.execSQL("delete from " + POKEMON_TABLE);
-    }
 }
