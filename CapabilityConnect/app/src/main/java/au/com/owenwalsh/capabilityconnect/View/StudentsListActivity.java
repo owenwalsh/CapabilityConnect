@@ -27,8 +27,6 @@ public class StudentsListActivity extends AppCompatActivity implements View.OnCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
         addActionBar = (FloatingActionButton)findViewById(R.id.fab);
         addStudentActionBar = (FloatingActionButton)findViewById(R.id.fab1);
         actionbar_open = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.actionbar_open);
