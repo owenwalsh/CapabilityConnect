@@ -6,13 +6,17 @@ package au.com.owenwalsh.capabilityconnect.Model;
 public class Tutorial {
     private int id;
     private String day;
-    private float time;
+    private String time;
 
     public Tutorial() {
     }
 
-    public Tutorial(int id, String day, float time) {
+    public Tutorial(int id, String day, String time) {
         this.id = id;
+        this.day = day;
+        this.time = time;
+    }
+    public Tutorial(String day, String time) {
         this.day = day;
         this.time = time;
     }
@@ -33,11 +37,11 @@ public class Tutorial {
         this.day = day;
     }
 
-    public float getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(float time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }
