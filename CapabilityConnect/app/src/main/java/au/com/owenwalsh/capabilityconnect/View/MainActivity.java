@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 tut.addTutorial(tutorial);*/
 
                 Log.d("Class Button Clicked: ", "moving to class activity");
-                Intent intent = new Intent(getApplicationContext(), TutorialActivity.class);
+                Intent intent = new Intent(getApplicationContext(), TutorialsListActivity.class);
                 startActivity(intent);
             }
         });
@@ -56,7 +56,11 @@ public class MainActivity extends AppCompatActivity {
                 sLogic.findStudentByClassId(1);*/
 
                 Log.d("Student Clicked: ", "Student to class activity");
+<<<<<<< HEAD
                 Intent intent = new Intent(getApplicationContext(), StudentActivity.class);
+=======
+                Intent intent = new Intent (getApplicationContext(), StudentsListActivity.class);
+>>>>>>> 18864bb69df24b9886a9c607aaaf62d9a78409ca
                 startActivity(intent);
             }
         });
