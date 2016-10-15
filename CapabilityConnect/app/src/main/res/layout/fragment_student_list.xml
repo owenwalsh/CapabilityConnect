@@ -5,9 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".View.StudentsListActivity">
+    android:fitsSystemWindows="true">
 
+    <FrameLayout
+        android:id="@+id/student_list_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/fragment_student_list"
         android:layout_width="match_parent"

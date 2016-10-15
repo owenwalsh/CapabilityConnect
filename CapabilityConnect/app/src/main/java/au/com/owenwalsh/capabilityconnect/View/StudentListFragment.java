@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.support.v4.app.FragmentTransaction;
 
 
 import au.com.owenwalsh.capabilityconnect.R;
@@ -64,8 +66,13 @@ public class StudentListFragment extends Fragment implements View.OnClickListene
                 animateFAB();
                 break;
             case R.id.fab1:
-                Intent intent = new Intent(getContext(),AddEditStudentActivity.class);
-                startActivity(intent);
+              //move to add student fragment
+                Fragment fragment = new AddStudentFragment();
+                FragmentManager fragmentManager = getChildFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.student_list_frame, fragment)
+                .addToBackStack(null)
+                .commit();
                 Log.d("Raj", "Fab 1");
                 break;
         }

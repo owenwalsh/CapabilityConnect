@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,17 +50,22 @@ public class MainActivity extends AppCompatActivity {
 
                     //Replacing the main content with ContentFragment Which is our Inbox View;
                     case R.id.tutorial:
-                        Toast.makeText(getApplicationContext(),"Inbox Selected",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Tutorials Selected",Toast.LENGTH_SHORT).show();
 
-                       StudentListFragment fragment = new StudentListFragment();
-                        android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frame,fragment);
-                        fragmentTransaction.commit();
+                      // StudentListFragment fragment = new StudentListFragment();
+                       //android.support.v4.app.FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                      // fragmentTransaction.replace(R.id.frame,fragment);
+                       // fragmentTransaction.commit();
 
                         return true;
 
                     case R.id.students:
-                        Toast.makeText(getApplicationContext(),"Stared Selected",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"Students Selected",Toast.LENGTH_SHORT).show();
+
+                        StudentListFragment studentFragment = new StudentListFragment();
+                        android.support.v4.app.FragmentTransaction studentFragmentTransaction = getSupportFragmentManager().beginTransaction();
+                        studentFragmentTransaction.replace(R.id.frame,studentFragment);
+                       studentFragmentTransaction.commit();
                         return true;
                     case R.id.weeks:
                         Toast.makeText(getApplicationContext(),"Send Selected",Toast.LENGTH_SHORT).show();

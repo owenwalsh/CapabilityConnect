@@ -19,16 +19,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.MainActivity" />
-        <activity android:name=".View.TutorialsListActivity" />
-        <activity android:name=".View.StudentsListActivity" />
-        <activity android:name=".View.AddEditTutorial" />
-        <activity android:name=".View.AssessmentActivity" />
-        <activity android:name=".View.CompetencyActivity" />
-        <activity android:name=".View.AddEditAssessmentActivity" />
-        <activity android:name=".View.AddEditCompetencyActivity" />
-        <activity android:name=".View.AttendanceActivity" />
-        <activity android:name=".View.WeeksActivity" />
-        <activity android:name=".View.AddEditStudentActivity"></activity>
     </application>
 
 </manifest>
