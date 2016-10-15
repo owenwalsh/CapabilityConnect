@@ -67,6 +67,7 @@ public class StudentListFragment extends Fragment implements View.OnClickListene
                 break;
             case R.id.fab1:
               //move to add student fragment
+                hideFloatingActionBar();
                 Fragment fragment = new AddStudentFragment();
                 FragmentManager fragmentManager = getChildFragmentManager();
                 fragmentManager.beginTransaction()
@@ -74,7 +75,7 @@ public class StudentListFragment extends Fragment implements View.OnClickListene
 
                 .commit();
                 Log.d("Raj", "Fab 1");
-                hideFloatingActionBar();
+
                 break;
         }
     }
@@ -133,8 +134,10 @@ public class StudentListFragment extends Fragment implements View.OnClickListene
         }
     }
     public void hideFloatingActionBar(){
+        addStudentActionBar.startAnimation(actionbar_close);
+        addStudentActionBar.setClickable(false);
         addStudentActionBar.hide();
         addActionBar.hide();
-    }
+      }
 
 }
