@@ -70,10 +70,11 @@ public class StudentListFragment extends Fragment implements View.OnClickListene
                 Fragment fragment = new AddStudentFragment();
                 FragmentManager fragmentManager = getChildFragmentManager();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.student_list_frame, fragment)
-                .addToBackStack(null)
+                        .add(R.id.student_list_frame, fragment)
+
                 .commit();
                 Log.d("Raj", "Fab 1");
+                hideFloatingActionBar();
                 break;
         }
     }
@@ -130,6 +131,10 @@ public class StudentListFragment extends Fragment implements View.OnClickListene
             progress.hide();
             progress = null;
         }
+    }
+    public void hideFloatingActionBar(){
+        addStudentActionBar.hide();
+        addActionBar.hide();
     }
 
 }
