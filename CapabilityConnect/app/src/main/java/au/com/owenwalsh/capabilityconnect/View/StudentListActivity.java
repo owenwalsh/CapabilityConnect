@@ -2,12 +2,14 @@ package au.com.owenwalsh.capabilityconnect.View;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -33,7 +35,7 @@ public class StudentListActivity extends AppCompatActivity implements View.OnCli
     private Boolean isFabOpen = false;
     private FloatingActionButton addActionBar;
     private FloatingActionButton addStudentActionBar;
-    private Animation actionbar_open,actionbar_close,rotate_forward,rotate_backward;
+    private Animation actionbar_open, actionbar_close, rotate_forward, rotate_backward;
 
     private StudentLogic studentLogic;
     private ArrayList<Student> students;
@@ -44,13 +46,12 @@ public class StudentListActivity extends AppCompatActivity implements View.OnCli
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_list);
 
-
         addActionBar = (FloatingActionButton) findViewById(R.id.fab);
         addStudentActionBar = (FloatingActionButton) findViewById(R.id.fab1);
         actionbar_open = AnimationUtils.loadAnimation(StudentListActivity.this, R.anim.actionbar_open);
-        actionbar_close = AnimationUtils.loadAnimation(StudentListActivity.this,R.anim.actionbar_close);
-        rotate_forward = AnimationUtils.loadAnimation(StudentListActivity.this,R.anim.rotate_forward);
-        rotate_backward = AnimationUtils.loadAnimation(StudentListActivity.this,R.anim.rotate_backward);
+        actionbar_close = AnimationUtils.loadAnimation(StudentListActivity.this, R.anim.actionbar_close);
+        rotate_forward = AnimationUtils.loadAnimation(StudentListActivity.this, R.anim.rotate_forward);
+        rotate_backward = AnimationUtils.loadAnimation(StudentListActivity.this, R.anim.rotate_backward);
 
         recyclerView = (RecyclerView) findViewById(R.id.fragment_student_list);
         recyclerView.setHasFixedSize(true);
@@ -70,29 +71,24 @@ public class StudentListActivity extends AppCompatActivity implements View.OnCli
                 Log.d("FAB FOCUSED:", "Add student selected");
                 //move user to AddStudentActivity
                 //Intent intent = new Intent(getApplicationContext(), StudentListActivity.class);
-               // startActivity(intent);
+                // startActivity(intent);
             }
         });
     }
 
-    public void animateFAB(){
-
-        if(isFabOpen){
-
+    public void animateFAB() {
+        if (isFabOpen) {
             addActionBar.startAnimation(rotate_backward);
             addStudentActionBar.startAnimation(actionbar_close);
             addStudentActionBar.setClickable(false);
             isFabOpen = false;
             Log.d("Raj", "close");
-
         } else {
-
             addActionBar.startAnimation(rotate_forward);
             addStudentActionBar.startAnimation(actionbar_open);
             addStudentActionBar.setClickable(true);
             isFabOpen = true;
-            Log.d("Raj","open");
-
+            Log.d("Raj", "open");
         }
     }
 
@@ -103,17 +99,42 @@ public class StudentListActivity extends AppCompatActivity implements View.OnCli
         adapter = new StudentAdapter(students, StudentListActivity.this);
         recyclerView.setAdapter(adapter);
         adapter.setItemClickCallback(this);
-       // hideProgressDialog();
+        // hideProgressDialog();
     }
 
     //passing the pokemon name to the detail activity on item clicked
-  @Override
+    @Override
     public void onItemClick(int p) {
         Student student = students.get(p);
         Intent intent = new Intent(StudentListActivity.this, DummyActivity.class);
         intent.putExtra(FIRST_NAME, student.getFirsName());
         startActivity(intent);
-        Log.d("Student Clicked is: ",student.getFirsName());
+        Log.d("Student Clicked is: ", student.getFirsName());
+    }
+
+    @Override
+    public void onDeleteClick(int p) {
+        Student student = students.get(p);
+        studentLogic.deleteStudent(student.getId());
+       /* new AlertDialog.Builder(getApplicationContext())
+                .setTitle("Deleting " + student.getLastName())
+                .setMessage("Do you really want to delete " +student.getLastName())
+                .setIcon(R.drawable.warning)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Toast.makeText(getApplicationContext(), "Student has been deleted ", Toast.LENGTH_SHORT).show();
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();*/
+
+    }
+
+    @Override
+    public void onUpdateClick(int p) {
+        Student student = students.get(p);
+        Intent intent = new Intent(getApplicationContext(), DummyActivity.class);
+        intent.putExtra(FIRST_NAME, student.getFirsName());
+        startActivity(intent);
     }
 
 
@@ -135,7 +156,7 @@ public class StudentListActivity extends AppCompatActivity implements View.OnCli
         }
     }
     */
-    public void hideFloatingActionBar(){
+    public void hideFloatingActionBar() {
         addStudentActionBar.startAnimation(actionbar_close);
         addStudentActionBar.setClickable(false);
         addStudentActionBar.hide();
