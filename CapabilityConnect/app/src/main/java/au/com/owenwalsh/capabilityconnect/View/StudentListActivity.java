@@ -4,16 +4,20 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -34,8 +38,6 @@ public class StudentListActivity extends AppCompatActivity implements View.OnCli
     private StudentLogic studentLogic;
     private ArrayList<Student> students;
     private StudentAdapter adapter;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +66,8 @@ public class StudentListActivity extends AppCompatActivity implements View.OnCli
         addStudentActionBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Toast.makeText(StudentListActivity.this, "Add student selected", Toast.LENGTH_SHORT).show();
+                Log.d("FAB FOCUSED:", "Add student selected");
                 //move user to AddStudentActivity
                 //Intent intent = new Intent(getApplicationContext(), StudentListActivity.class);
                // startActivity(intent);
