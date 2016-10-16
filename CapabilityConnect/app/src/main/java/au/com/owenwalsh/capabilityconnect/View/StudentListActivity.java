@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -43,8 +44,12 @@ public class StudentListActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //  setContentView(R.layout.activity_student_list);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_list);
+        LayoutInflater inflater = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View contentView = inflater.inflate(R.layout.activity_student_list, null, false);
+        drawerLayout.addView(contentView, 0);
 
         addActionBar = (FloatingActionButton) findViewById(R.id.fab);
         addStudentActionBar = (FloatingActionButton) findViewById(R.id.fab1);
@@ -81,8 +86,6 @@ public class StudentListActivity extends BaseActivity implements View.OnClickLis
     }
 
 
-
-
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_student_list);
         recyclerView.setHasFixedSize(true);
@@ -91,9 +94,9 @@ public class StudentListActivity extends BaseActivity implements View.OnClickLis
         loadStudents();
     }
 
-    public void animateFAB(){
+    public void animateFAB() {
 
-        if(isFabOpen){
+        if (isFabOpen) {
             addActionBar.startAnimation(rotate_backward);
             addStudentActionBar.startAnimation(actionbar_close);
             addStudentActionBar.setClickable(false);
@@ -152,8 +155,6 @@ public class StudentListActivity extends BaseActivity implements View.OnClickLis
         intent.putExtra(FIRST_NAME, student.getFirsName());
         startActivity(intent);
     }
-
-
 
 
     /**
