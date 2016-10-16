@@ -28,7 +28,7 @@ import au.com.owenwalsh.capabilityconnect.Database.StudentLogic;
 import au.com.owenwalsh.capabilityconnect.Model.Student;
 import au.com.owenwalsh.capabilityconnect.R;
 
-public class StudentListActivity extends AppCompatActivity implements View.OnClickListener, StudentAdapter.ItemClickCallback {
+public class StudentListActivity extends BaseActivity implements View.OnClickListener, StudentAdapter.ItemClickCallback {
     public static final String FIRST_NAME = "fistName";
     private RecyclerView recyclerView;
     private ProgressDialog progress;
@@ -70,14 +70,34 @@ public class StudentListActivity extends AppCompatActivity implements View.OnCli
                 Toast.makeText(StudentListActivity.this, "Add student selected", Toast.LENGTH_SHORT).show();
                 Log.d("FAB FOCUSED:", "Add student selected");
                 //move user to AddStudentActivity
+<<<<<<< HEAD
                 //Intent intent = new Intent(getApplicationContext(), StudentListActivity.class);
                 // startActivity(intent);
+=======
+                Intent intent = new Intent(getApplicationContext(), AddStudentActivity.class);
+                startActivity(intent);
+>>>>>>> 009dcec27bcbb84488de7e020fa5ae522b02ac9d
             }
         });
     }
 
+<<<<<<< HEAD
     public void animateFAB() {
         if (isFabOpen) {
+=======
+    private void initViews() {
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_student_list);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        loadStudents();
+    }
+
+    public void animateFAB(){
+
+        if(isFabOpen){
+
+>>>>>>> 009dcec27bcbb84488de7e020fa5ae522b02ac9d
             addActionBar.startAnimation(rotate_backward);
             addStudentActionBar.startAnimation(actionbar_close);
             addStudentActionBar.setClickable(false);
@@ -135,6 +155,16 @@ public class StudentListActivity extends AppCompatActivity implements View.OnCli
         Intent intent = new Intent(getApplicationContext(), DummyActivity.class);
         intent.putExtra(FIRST_NAME, student.getFirsName());
         startActivity(intent);
+    }
+
+    @Override
+    public void onDeleteClick(int p) {
+
+    }
+
+    @Override
+    public void onUpdateClick(int p) {
+
     }
 
 
