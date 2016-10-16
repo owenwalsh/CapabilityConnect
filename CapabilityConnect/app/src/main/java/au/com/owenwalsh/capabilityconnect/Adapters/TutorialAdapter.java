@@ -22,6 +22,16 @@ public class TutorialAdapter extends RecyclerView.Adapter<TutorialAdapter.ViewHo
     private Context mContext;
     private List<Tutorial> classList;
 
+    private ItemClickCallback itemClickCallback;
+
+    //declaring interface for the on click event
+    public interface ItemClickCallback {
+        void onItemClick(int p);
+    }
+    public void setItemClickCallback(final ItemClickCallback itemClickCallback) {
+        this.itemClickCallback = itemClickCallback;
+    }
+
     /**
      * Constructor for Tutorial Adapter
      *
@@ -53,8 +63,11 @@ public class TutorialAdapter extends RecyclerView.Adapter<TutorialAdapter.ViewHo
     @Override
     public void onBindViewHolder(TutorialAdapter.ViewHolder viewHolder, int position) {
     viewHolder.classID.setText(classList.get(position).getId());
-        viewHolder.classLayout.setOnClickListener(new View.OnClickListener(){
+    viewHolder.classDay.setText(classList.get(position).getId());
+    viewHolder.classTime.setText(classList.get(position).getId());
+    viewHolder.numOfStudents.setText(classList.get(position).getId());
 
+       /* viewHolder.classLayout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
                 Log.d("Class Clicked: ","a class has been clicked");
@@ -77,7 +90,7 @@ public class TutorialAdapter extends RecyclerView.Adapter<TutorialAdapter.ViewHo
                 Log.d("Competency Clicked: ","competency button has been clicked");
                 //code for whatever happens when  competency image button is clicked
             }
-        });
+        });*/
     }
 
     public void updateListAdapter(List<Tutorial> classList) {
@@ -89,18 +102,35 @@ public class TutorialAdapter extends RecyclerView.Adapter<TutorialAdapter.ViewHo
         return classList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView classID;
+        public TextView classDay;
+        public TextView classTime;
+        public TextView numOfStudents;
         public ImageButton assesmentButton;
         public ImageButton competencyButton;
         public RelativeLayout classLayout;
+        public View container;
 
         public ViewHolder(View view) {
             super(view);
             classLayout = (RelativeLayout) view.findViewById(R.id.class_card);
             classID = (TextView) view.findViewById(R.id.class_id);
+            classDay = (TextView) view.findViewById(R.id.class_day);
+            classTime = (TextView) view.findViewById(R.id.class_time);
+            numOfStudents = (TextView) view.findViewById(R.id.class_time);
+            container = view.findViewById(R.id.tutorial_cont_item_root);
+            container.setOnClickListener(this);
+
             assesmentButton = (ImageButton) view.findViewById(R.id.assessment_button);
             competencyButton = (ImageButton) view.findViewById(R.id.competency_button);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (view.getId() == R.id.cont_item_root) {
+                itemClickCallback.onItemClick(getAdapterPosition());
+            }
         }
     }
 }

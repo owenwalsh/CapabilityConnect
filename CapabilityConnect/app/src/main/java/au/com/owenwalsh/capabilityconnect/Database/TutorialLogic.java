@@ -45,16 +45,18 @@ public class TutorialLogic {
         db.close();
     }
 
-    public void addTutorial(Tutorial tutorial) {
+    public long addTutorial(Tutorial tutorial) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(dbHelper.DAY, tutorial.getDay());
         contentValues.put(dbHelper.TIME, tutorial.getTime());
+        open();
         long row = db.insert(dbHelper.TUTORIALS, null, contentValues);
         close();
-        Log.d("Tutorial added :", String.valueOf(row));
+        return  row;
     }
 
     public Tutorial findTutorialById(int id) {
+        open();
         tutorial = new Tutorial();
         try {
             cursor = db.rawQuery("SELECT * FROM " + dbHelper.TUTORIALS + " WHERE " + dbHelper.TUTORIAL_ID + " = " + id , null);
@@ -75,6 +77,7 @@ public class TutorialLogic {
 
     //FIND ALL TUTORIALS
     public ArrayList<Tutorial> findAllTutorials() {
+        open();
         tutorials = new ArrayList<>();
         try {
             cursor = db.rawQuery("SELECT * FROM " + dbHelper.TUTORIALS, null);
@@ -89,7 +92,6 @@ public class TutorialLogic {
             Log.e(TAG, e.getMessage());
             tutorials = null;
         }
-
         close();
         return tutorials;
     }

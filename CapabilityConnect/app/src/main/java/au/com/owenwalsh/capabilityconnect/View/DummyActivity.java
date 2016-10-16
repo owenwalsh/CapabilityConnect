@@ -36,8 +36,4 @@ public class DummyActivity extends AppCompatActivity {
         final String name = intent.getStringExtra(StudentListFragment.FIRST_NAME);
         firstName.setText(name);
     }
-
-
-
-
 }

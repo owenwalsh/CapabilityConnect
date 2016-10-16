@@ -1,14 +1,14 @@
 package au.com.owenwalsh.capabilityconnect.View;
 
 import android.app.ProgressDialog;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -16,13 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.support.v4.app.FragmentTransaction;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -95,21 +90,17 @@ public class StudentListFragment extends Fragment implements View.OnClickListene
     public void animateFAB(){
 
         if(isFabOpen){
-
             addActionBar.startAnimation(rotate_backward);
             addStudentActionBar.startAnimation(actionbar_close);
             addStudentActionBar.setClickable(false);
             isFabOpen = false;
             Log.d("Raj", "close");
-
         } else {
-
             addActionBar.startAnimation(rotate_forward);
             addStudentActionBar.startAnimation(actionbar_open);
             addStudentActionBar.setClickable(true);
             isFabOpen = true;
             Log.d("Raj","open");
-
         }
     }
 
@@ -129,7 +120,30 @@ public class StudentListFragment extends Fragment implements View.OnClickListene
         Intent intent = new Intent(getContext(), DummyActivity.class);
         intent.putExtra(FIRST_NAME, student.getFirsName());
         startActivity(intent);
-        Log.d("Student Clicked is: ",student.getFirsName());
+    }
+    @Override
+    public void onDeleteClick(int p) {
+        Student student = students.get(p);
+        studentLogic.deleteStudent(student.getId());
+        new AlertDialog.Builder(getContext())
+                .setTitle("Deleting " + student.getLastName())
+                .setMessage("Do you really want to delete " +student.getLastName())
+                .setIcon(R.drawable.warning)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        Toast.makeText(getContext(), "Student has been deleted ", Toast.LENGTH_SHORT).show();
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();
+
+    }
+
+    @Override
+    public void onUpdateClick(int p) {
+        Student student = students.get(p);
+        Intent intent = new Intent(getContext(), DummyActivity.class);
+        intent.putExtra(FIRST_NAME, student.getFirsName());
+        startActivity(intent);
     }
 
     /**

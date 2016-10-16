@@ -1,13 +1,21 @@
 package au.com.owenwalsh.capabilityconnect.View;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+
+import au.com.owenwalsh.capabilityconnect.Adapters.TutorialAdapter;
+import au.com.owenwalsh.capabilityconnect.Database.TutorialLogic;
+import au.com.owenwalsh.capabilityconnect.Model.Tutorial;
 import au.com.owenwalsh.capabilityconnect.R;
 
 /**
@@ -18,7 +26,15 @@ import au.com.owenwalsh.capabilityconnect.R;
  * Use the {@link TutorialsListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TutorialsListFragment extends Fragment {
+public class TutorialsListFragment extends Fragment implements TutorialAdapter.ItemClickCallback{
+
+    public static final String TUT_ID = "tutorialId";
+    private TutorialLogic tutorialLogic;
+    private TutorialAdapter adapter;
+    private Tutorial tutorial;
+    private ArrayList<Tutorial> tutorials;
+    private RecyclerView recyclerView;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -65,7 +81,20 @@ public class TutorialsListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tutorials_list, container, false);
+        View v = inflater.inflate(R.layout.fragment_student_list,container,false);
+
+        recyclerView = (RecyclerView) v.findViewById(R.id.fragment_student_list);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+
+
+        tutorialLogic = new TutorialLogic(getContext());
+        tutorials = tutorialLogic.findAllTutorials();
+        adapter = new TutorialAdapter(tutorials, getContext());
+        recyclerView.setAdapter(adapter);
+        adapter.setItemClickCallback(this);
+        return v ;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -90,6 +119,14 @@ public class TutorialsListFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onItemClick(int p) {
+        Tutorial student = tutorials.get(p);
+        Intent intent = new Intent(getContext(), DummyActivity.class);
+        intent.putExtra(TUT_ID, String.valueOf(tutorial.getId()));
+        startActivity(intent);
     }
 
     /**
