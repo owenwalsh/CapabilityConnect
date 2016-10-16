@@ -1,5 +1,6 @@
 package au.com.owenwalsh.capabilityconnect.View;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -61,12 +62,15 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.students:
                         Toast.makeText(getApplicationContext(),"Students Selected",Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(), StudentListActivity.class);
+                        startActivity(intent);
 
-                        StudentListFragment studentFragment = new StudentListFragment();
+                       /* StudentListFragment studentFragment = new StudentListFragment();
                         android.support.v4.app.FragmentTransaction studentFragmentTransaction = getSupportFragmentManager().beginTransaction();
                         studentFragmentTransaction.replace(R.id.frame,studentFragment);
                        studentFragmentTransaction.commit();
                         return true;
+                        */
                     case R.id.weeks:
                         Toast.makeText(getApplicationContext(),"Send Selected",Toast.LENGTH_SHORT).show();
                         return true;

@@ -27,6 +27,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="au.com.owenwalsh.capabilityconnect.View.MainActivity" />
         </activity>
+        <activity android:name=".View.StudentListActivity"></activity>
     </application>
 
 </manifest>
