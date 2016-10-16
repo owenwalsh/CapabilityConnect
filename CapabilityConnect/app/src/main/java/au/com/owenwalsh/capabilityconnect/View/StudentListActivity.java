@@ -28,7 +28,7 @@ import au.com.owenwalsh.capabilityconnect.Database.StudentLogic;
 import au.com.owenwalsh.capabilityconnect.Model.Student;
 import au.com.owenwalsh.capabilityconnect.R;
 
-public class StudentListActivity extends BaseActivity implements  StudentAdapter.ItemClickCallback {
+public class StudentListActivity extends BaseActivity implements View.OnClickListener, StudentAdapter.ItemClickCallback {
     public static final String FIRST_NAME = "fistName";
     private RecyclerView recyclerView;
     private ProgressDialog progress;
@@ -79,6 +79,9 @@ public class StudentListActivity extends BaseActivity implements  StudentAdapter
             }
         });
     }
+
+
+
 
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_student_list);
@@ -179,4 +182,8 @@ public class StudentListActivity extends BaseActivity implements  StudentAdapter
     }
 
 
+    @Override
+    public void onClick(View view) {
+
+    }
 }
