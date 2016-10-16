@@ -1,6 +1,7 @@
 package au.com.owenwalsh.capabilityconnect.Adapters;
 
 import android.content.Context;
+//import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-
 import org.w3c.dom.Text;
 
 import java.util.List;
@@ -21,9 +21,25 @@ import au.com.owenwalsh.capabilityconnect.R;
 /**
  * Created by owenw on 11/10/2016.
  */
-public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder> {
+
+
+public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHolder>  {
     private Context mContext;
     private List<Student> studentList;
+
+    private ItemClickCallback itemClickCallback;
+
+
+    //declaring interface for the on click event
+    public interface ItemClickCallback {
+        void onItemClick(int p);
+    }
+
+    public void setItemClickCallback(final ItemClickCallback itemClickCallback) {
+        this.itemClickCallback = itemClickCallback;
+    }
+
+
 
     /**
      * Constructor for Tutorial Adapter
@@ -31,10 +47,13 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
      * @param studentList
      * @param mContext
      */
+
+
     public StudentAdapter (List<Student> studentList, Context mContext){
         this.studentList = studentList;
         this.mContext = mContext;
     }
+
 
     /**
      *
@@ -42,6 +61,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
      * @param viewType
      * @return
      */
+
     @Override
     public StudentAdapter.ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.student_row, viewGroup, false);
@@ -53,6 +73,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
      * @param viewHolder
      * @param position
      */
+
     @Override
     public void onBindViewHolder(StudentAdapter.ViewHolder viewHolder, int position) {
         viewHolder.studentID.setText(studentList.get(position).getId());
@@ -93,13 +114,14 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
         this.studentList = studentList;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder  implements View.OnClickListener {
         public TextView studentID;
         public TextView studentFirstName;
         public TextView studentLastName;
         public ImageButton removeStudentButton;
         public ImageButton editStudentButton;
         public RelativeLayout studentLayout;
+        public View container;
 
         public ViewHolder(View view) {
             super(view);
@@ -109,6 +131,14 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.ViewHold
             studentLastName = (TextView) view.findViewById(R.id.student_last_name);
             removeStudentButton = (ImageButton) view.findViewById(R.id.remove_button);
             editStudentButton = (ImageButton) view.findViewById(R.id.edit_button);
+            container = view.findViewById(R.id.cont_item_root);
+            container.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            if (view.getId() == R.id.cont_item_root)
+                itemClickCallback.onItemClick(getAdapterPosition());
         }
     }
 }

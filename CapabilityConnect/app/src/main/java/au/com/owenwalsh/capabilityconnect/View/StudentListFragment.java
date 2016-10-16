@@ -25,16 +25,28 @@ import android.view.animation.AnimationUtils;
 import android.support.v4.app.FragmentTransaction;
 
 
+import java.util.ArrayList;
+
+import au.com.owenwalsh.capabilityconnect.Adapters.StudentAdapter;
+import au.com.owenwalsh.capabilityconnect.Database.StudentLogic;
+import au.com.owenwalsh.capabilityconnect.Model.Student;
 import au.com.owenwalsh.capabilityconnect.R;
 
 
-public class StudentListFragment extends Fragment implements View.OnClickListener  {
+
+
+public class StudentListFragment extends Fragment implements View.OnClickListener, StudentAdapter.ItemClickCallback{
+    public static final String FIRST_NAME = "fistName";
     private RecyclerView recyclerView;
     private ProgressDialog progress;
     private Boolean isFabOpen = false;
     private FloatingActionButton addActionBar;
     private FloatingActionButton addStudentActionBar;
     private Animation actionbar_open,actionbar_close,rotate_forward,rotate_backward;
+
+    private StudentLogic studentLogic;
+    private ArrayList<Student> students;
+    private StudentAdapter adapter;
 
 
     @Nullable
@@ -99,21 +111,25 @@ public class StudentListFragment extends Fragment implements View.OnClickListene
             Log.d("Raj","open");
 
         }
-
     }
 
-    /**
-     *
-     */
-
-
-    /**
-     *
-     */
     private void loadStudents() {
         showProgressDialog();
-        //do all my work here
+        studentLogic = new StudentLogic(getContext());
+        students = studentLogic.findAllStudent();
+        adapter = new StudentAdapter(students, getContext());
+        recyclerView.setAdapter(adapter);
+        adapter.setItemClickCallback(this);
         hideProgressDialog();
+    }
+    //passing the pokemon name to the detail activity on item clicked
+    @Override
+    public void onItemClick(int p) {
+        Student student = students.get(p);
+        Intent intent = new Intent(getContext(), DummyActivity.class);
+        intent.putExtra(FIRST_NAME, student.getFirsName());
+        startActivity(intent);
+        Log.d("Student Clicked is: ",student.getFirsName());
     }
 
     /**

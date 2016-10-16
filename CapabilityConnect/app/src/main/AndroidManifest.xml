@@ -10,8 +10,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/MainTheme">
-        <activity
-            android:name=".View.SplashActivity">
+        <activity android:name=".View.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,6 +18,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".View.MainActivity" />
+        <activity
+            android:name=".View.DummyActivity"
+            android:label="@string/title_activity_dummy"
+            android:parentActivityName=".View.MainActivity"
+            android:theme="@style/MainTheme">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="au.com.owenwalsh.capabilityconnect.View.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

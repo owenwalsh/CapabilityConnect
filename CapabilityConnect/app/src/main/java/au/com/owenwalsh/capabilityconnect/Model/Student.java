@@ -10,17 +10,34 @@ public class Student {
     private String email;
     private String weakness;
     private String strength;
+    private String stream;
 
     public Student() {
     }
 
-    public Student(String id, String firsName, String lastName, String email, String weakness, String strength) {
+    public Student(String id, String firsName, String lastName, String email) {
+        this.id = id;
+        this.firsName = firsName;
+        this.lastName = lastName;
+        this.email = email;
+    }
+
+    public Student(String id, String firsName, String lastName, String email, String weakness, String strength, String stream) {
         this.id = id;
         this.firsName = firsName;
         this.lastName = lastName;
         this.email = email;
         this.weakness = weakness;
         this.strength = strength;
+        this.stream = stream;
+    }
+
+    public String getStream() {
+        return stream;
+    }
+
+    public void setStream(String stream) {
+        this.stream = stream;
     }
 
     public String getId() {

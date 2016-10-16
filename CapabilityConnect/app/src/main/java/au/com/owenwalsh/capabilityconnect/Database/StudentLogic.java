@@ -43,7 +43,7 @@ public class StudentLogic {
         db.close();
     }
 
-    public void insertStudent(Student student) {
+    public long insertStudent(Student student) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(dbHelper.ZID, student.getId());
         contentValues.put(dbHelper.FIRST_NAME, student.getFirsName());
@@ -52,7 +52,7 @@ public class StudentLogic {
         contentValues.put(dbHelper.WEAKNESS, student.getWeakness());
         contentValues.put(dbHelper.STRENGTH, student.getStrength());
         long row = db.insert(dbHelper.STUDENTS_TABLE, null, contentValues);
-        Log.d("Student Added  ID is :", String.valueOf(row));
+        return row;
     }
 
     public void updateStudent(Student student) {
