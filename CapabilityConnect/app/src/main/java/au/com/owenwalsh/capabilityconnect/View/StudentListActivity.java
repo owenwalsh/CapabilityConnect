@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -26,7 +27,7 @@ import au.com.owenwalsh.capabilityconnect.Database.StudentLogic;
 import au.com.owenwalsh.capabilityconnect.Model.Student;
 import au.com.owenwalsh.capabilityconnect.R;
 
-public class StudentListActivity extends AppCompatActivity implements View.OnClickListener, StudentAdapter.ItemClickCallback {
+public class StudentListActivity extends BaseActivity implements View.OnClickListener, StudentAdapter.ItemClickCallback {
     public static final String FIRST_NAME = "fistName";
     private RecyclerView recyclerView;
     private ProgressDialog progress;
@@ -39,11 +40,21 @@ public class StudentListActivity extends AppCompatActivity implements View.OnCli
     private ArrayList<Student> students;
     private StudentAdapter adapter;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //  setContentView(R.layout.activity_student_list);
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_list);
+        LayoutInflater inflater = (LayoutInflater) this
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View contentView = inflater.inflate(R.layout.activity_student_list, null, false);
+        drawerLayout.addView(contentView, 0);
 
+
+
+
+
+        initViews();
 
         addActionBar = (FloatingActionButton) findViewById(R.id.fab);
         addStudentActionBar = (FloatingActionButton) findViewById(R.id.fab1);
@@ -52,11 +63,6 @@ public class StudentListActivity extends AppCompatActivity implements View.OnCli
         rotate_forward = AnimationUtils.loadAnimation(StudentListActivity.this,R.anim.rotate_forward);
         rotate_backward = AnimationUtils.loadAnimation(StudentListActivity.this,R.anim.rotate_backward);
 
-        recyclerView = (RecyclerView) findViewById(R.id.fragment_student_list);
-        recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        recyclerView.setLayoutManager(layoutManager);
-        loadStudents();
         addActionBar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,10 +75,18 @@ public class StudentListActivity extends AppCompatActivity implements View.OnCli
                 Toast.makeText(StudentListActivity.this, "Add student selected", Toast.LENGTH_SHORT).show();
                 Log.d("FAB FOCUSED:", "Add student selected");
                 //move user to AddStudentActivity
-                //Intent intent = new Intent(getApplicationContext(), StudentListActivity.class);
-               // startActivity(intent);
+                Intent intent = new Intent(getApplicationContext(), AddStudentActivity.class);
+                startActivity(intent);
             }
         });
+    }
+
+    private void initViews() {
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_student_list);
+        recyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+        loadStudents();
     }
 
     public void animateFAB(){
@@ -103,17 +117,27 @@ public class StudentListActivity extends AppCompatActivity implements View.OnCli
         adapter = new StudentAdapter(students, StudentListActivity.this);
         recyclerView.setAdapter(adapter);
         adapter.setItemClickCallback(this);
-       // hideProgressDialog();
+        // hideProgressDialog();
     }
 
     //passing the pokemon name to the detail activity on item clicked
-  @Override
+    @Override
     public void onItemClick(int p) {
         Student student = students.get(p);
         Intent intent = new Intent(StudentListActivity.this, DummyActivity.class);
         intent.putExtra(FIRST_NAME, student.getFirsName());
         startActivity(intent);
         Log.d("Student Clicked is: ",student.getFirsName());
+    }
+
+    @Override
+    public void onDeleteClick(int p) {
+
+    }
+
+    @Override
+    public void onUpdateClick(int p) {
+
     }
 
 
